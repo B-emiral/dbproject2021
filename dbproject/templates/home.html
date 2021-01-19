@@ -4,12 +4,12 @@
 
 {% block content %}
  
-    {% if wasLogged %}
+    {% if session["user_id"] %}
     <section class="hero">
         <div class="hero-body">
             <div class="container has-text-centered">
                 <h1 class="title">Welcome {{user_name}}</h1>
-                <small class="is-small">Registered Program: {{user_reg_term.replace("_"," ")}}</small>
+                <small class="is-small">Registered Program: {{session["user_term"].replace("_"," ")}}</small>
                 <br>
                 <hr>
             </div>

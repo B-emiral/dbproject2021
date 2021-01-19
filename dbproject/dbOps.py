@@ -1,4 +1,5 @@
 import MySQLdb
+from flask import session
 from settings import MYSQLPASSWORD, DATABASE, RESPOND_TEXT
 
 
@@ -13,7 +14,12 @@ def add_course_to_catalogTerm( course_id, course_name, course_credit):
     db.close()
 
 
-def add_course_to_transcript( stu_id, term, course_id, grade='XX', ins_name='NoName', e_grade="XX", crn='00000'):
+def add_course_to_transcript( term, course_id, grade='XX', ins_name='NoName', e_grade="XX", crn='00000'):
+    course_id = course_id.replace("_", " ")
+    stu_id = session["user_id"]
+    
+
+
     if (e_grade == "XX") | (e_grade == ""):
         e_grade = grade
     db = MySQLdb.connect(host="localhost", user="root", passwd=MYSQLPASSWORD, db=DATABASE)
@@ -75,7 +81,9 @@ def delete_on_transcript(transcript_id):
     db.close()
     return message
 
-def getTranscript(stu_id, attributeName="*", transcript_id = ""):
+def getTranscript(attributeName="*", transcript_id = ""):
+    stu_id = session["user_id"]
+
     db = MySQLdb.connect(host="localhost", user="root", passwd=MYSQLPASSWORD, db=DATABASE)
     cursor = db.cursor()
     if transcript_id=="":
@@ -98,7 +106,9 @@ def getCourse(attributeName="*"):
     return result
 
 
-def getCatalogTerm(CATALOG_TERM, attribute="*"):
+def getCatalogTerm(attribute="*"):
+    CATALOG_TERM = session["user_term"]
+
     db = MySQLdb.connect(host="localhost", user="root", passwd=MYSQLPASSWORD, db=DATABASE)
     cursor = db.cursor()
     cat_term = CATALOG_TERM.replace("_"," ")
@@ -117,6 +127,7 @@ def getCatalogTerm(CATALOG_TERM, attribute="*"):
 
 
 def login_checker(email, password):
+
     db = MySQLdb.connect(host="localhost", user="root", passwd=MYSQLPASSWORD, db=DATABASE)
     cursor = db.cursor()
     result = None
@@ -152,7 +163,9 @@ def sign_up(user_name, email, password, cat_term):
     return message
 
 
-def calculate_GPA(user_id, whichGrade="grade"):
+def calculate_GPA(whichGrade="grade"):
+    user_id = session["user_id"]
+
     db = MySQLdb.connect(host="localhost", user="root", passwd=MYSQLPASSWORD, db=DATABASE)
     cursor = db.cursor()
     message = ""
@@ -215,7 +228,10 @@ def calculate_GPA(user_id, whichGrade="grade"):
     return (total / total_credit) if total_credit else None
 
 
-def profileInfo(stu_id, user_term):
+def profileInfo():
+    stu_id = session["user_id"]
+    user_term = session["user_term"]
+
     db = MySQLdb.connect(host="localhost", user="root", passwd=MYSQLPASSWORD, db=DATABASE)
     cursor = db.cursor()
     message = ""
@@ -309,7 +325,10 @@ def profileInfo(stu_id, user_term):
     return result
 
 
-def summary(stu_id, reg_term):
+def summary():
+    stu_id = session["user_id"]
+    reg_term = session["user_term"]
+
     db = MySQLdb.connect(host="localhost", user="root", passwd=MYSQLPASSWORD, db=DATABASE)
     cursor = db.cursor()
     message = ""

@@ -8,19 +8,24 @@
         <h1>CURRICULUM</h1>
         <br>
         <h4>REGISTERED PROGRAM:</h4>
-        <h5>{{user_reg_term.replace("_"," ")}}</h5>
+        <h5>{{session["user_term"].replace("_"," ")}}</h5>
     </div>
 
     <hr>
     {% for result in results %}
     <div class="box">
-        <span class="tag is-danger is-medium ml-6">{{result["course_id"]}}</span>
+        <span class="tag is-info is-medium ml-6">{{result["course_id"]}}</span>
         {% if result["equ_code"] %}
         <span class="tag is-info is-light ml-3">{{result["equ_code"]}}</span>
         {% endif %}
         <span class="tag is-primary is-light ml-3">{{result["course_name"]}}</span>
-        <span class="tag is-success is-light ml-3">{{result["credit"]}}</span>
-        <span class="tag is-warning is-light ml-3">{{result["grade"]}}</span>
+        <span class="tag is-secondary is-light ml-3">credit: {{result["credit"]}}</span>
+        {% if result["grade"]=="FF" or result["grade"]=="VF" or result["grade"]=="" or result["grade"]=="XX" %}
+        <span class="tag is-danger is-medium  ml-3">{{result["grade"]}}</span>
+        {% elif result["grade"] %}
+        <span class="tag is-success is-medium  ml-3">{{result["grade"]}}</span>
+        {% endif %}
+        
         <br>
     </div>
     {% endfor %}

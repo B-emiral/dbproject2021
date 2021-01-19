@@ -25,7 +25,7 @@
           </a>
         </div>
 
-        {%if wasLogged%}
+        {%if session["user_id"]%}
         <div id="navbarBasicExample" class="navbar-menu">
           <div class="navbar-start">
             <a class="navbar-item" href="{{url_for('home_page')}}">
@@ -35,7 +35,7 @@
               Transcript
             </a>
             <a class="navbar-item" href="{{url_for('catalogterm_page')}}">
-              Catalog Term
+              Curriculum
             </a>
             <a class="navbar-item" href="{{url_for('mapout_page')}}">
               Map Out

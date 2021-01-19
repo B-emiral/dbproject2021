@@ -8,6 +8,10 @@
     <br><br>
 
     <h2>Transcript</h2>
+    <div class="has-background-warning-light">
+        <h4>To change your GPA grade, you need to make changes to the last course you took !</h4>
+    </div>
+    
     <hr>
     {% for course in transcript %}
     <form action="/editing" method="post" name="editing">
@@ -18,13 +22,10 @@
                 <div>
                     <span class="tag is-danger is-medium ml-6">{{course[3]}}</span>
                     <span class="tag is-info is-light ml-3">{{course[2]}}</span>
-                    <span class="tag is-success is-light ml-3">C:{{course[4]}}</span>
-                    <span class="tag is-success is-light ml-3">E:{{course[7]}}</span>
+                    <span class="tag is-success is-light ml-3">Current Grade:{{course[4]}}</span>
+                    <span class="tag is-success is-light ml-3">Estimated Grade:{{course[7]}}</span>
                     <span class="tag is-warning is-light ml-3">{{course[5]}}</span>
 
-                    <span class="tag is-warning is-light ml-3">{{course[0]}}</span>
-                    <span class="tag is-warning is-light ml-3">{{course[1]}}</span>
-                    <span class="tag is-warning is-light ml-3">{{course[6]}}</span>
                     
                     <button class="button is-info is-normal ml-6">EDIT</button>
                     <br>
