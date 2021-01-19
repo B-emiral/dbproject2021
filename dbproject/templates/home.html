@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %} Home {%endblock%} 
+
+{% block content %}
+ 
+    {% if wasLogged %}
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <h1 class="title">Welcome {{user_name}}</h1>
+                <small class="is-small">Registered Program: {{user_reg_term.replace("_"," ")}}</small>
+                <br>
+                <hr>
+            </div>
+        </div>
+    </section>
+
+    <div class="section">
+        <div class="container">
+            <h5>Completed Course / Mandatory Course [{{profileInfo.completed_course}}/{{profileInfo.total_mandatory_course}}]   %{{100*profileInfo.course_ratio}}</h5>
+            <progress class="progress" value={{100*profileInfo.course_ratio}} max="100"></progress>
+            <hr>
+        </div>
+        <div class="container">
+            <h5>Completed Credit / Mandatory Credit [{{profileInfo.completed_credit}}/{{profileInfo.total_mandatory_credit}}]   %{{100*profileInfo.credit_ratio}}</h5>
+            <progress class="progress" value={{100*profileInfo.credit_ratio}} max="100"></progress>
+            <hr>
+        </div>
+
+
+
+    </div>
+
+
+    {% else %}
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <h1 class="title">Welcome to the Map Out</h1>
+                <h2 class="title">Please log in or sign up</h2>
+                <br>
+                <hr>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+
+{%endblock%}

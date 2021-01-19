@@ -1,0 +1,135 @@
+{% extends "layout.html" %}
+
+{% block title %} Courses {%endblock%} 
+
+{% block content %} 
+<div class="container">
+    <h1>MAP OUT</h1>
+    <br><br>
+
+    <h2>Transcript</h2>
+    <hr>
+    {% for course in transcript %}
+    <form action="/editing" method="post" name="editing">
+        <div class="field">
+            <div class="box">
+                <input type = "hidden" name = "edit" value = "{{course[0]}}" />
+
+                <div>
+                    <span class="tag is-danger is-medium ml-6">{{course[3]}}</span>
+                    <span class="tag is-info is-light ml-3">{{course[2]}}</span>
+                    <span class="tag is-success is-light ml-3">C:{{course[4]}}</span>
+                    <span class="tag is-success is-light ml-3">E:{{course[7]}}</span>
+                    <span class="tag is-warning is-light ml-3">{{course[5]}}</span>
+
+                    <span class="tag is-warning is-light ml-3">{{course[0]}}</span>
+                    <span class="tag is-warning is-light ml-3">{{course[1]}}</span>
+                    <span class="tag is-warning is-light ml-3">{{course[6]}}</span>
+                    
+                    <button class="button is-info is-normal ml-6">EDIT</button>
+                    <br>
+                </div>
+            </div>
+
+            <br>
+        </div>
+    </form>
+
+    {% endfor %}
+    
+    {% if GPA%}
+    <div class="container has-text-primary">
+        Current GPA: {{ "{:.2f}".format(GPA) }}
+    </div>
+    {% endif%}
+    {% if eGPA%}
+    <div class="field has-text-success">
+        Estimated GPA: {{ "{:.2f}".format(eGPA) }}
+    </div>
+    {% endif%}
+    <hr>
+
+    {% if new_course != NULL%}
+        <div class="container is-success">
+            <h3>{{addingResult}}</h3>
+            <li>{{new_course["course_id"]}}</li>
+            <li>{{new_course["course_term"]}}</li>
+            <li>{{new_course["course_insname"]}}</li>
+            <li>{{new_course["course_grade"]}}</li>
+            <li>{{new_course["course_e_grade"]}}</li>
+        </div>
+    {% endif %}
+
+
+   
+
+    <h2>Course Add</h2>
+    <form action="/mapout" method="post" name="mapout">
+        <div class="field">
+            <label for="title" class="label">Course</label>
+            <div class="control has-icons-left">
+                <div class="select">
+                <select name="course_code_form">
+                    <option selected>Select course</option>
+                    {% for (course_code,course_name,credit,course_equ) in catalog_courses%}
+                        {%if course_equ:%}
+                            <option value="{{ course_code.replace(' ','_') }}">{{course_code}} ({{course_equ}}):    {{course_name}} [{{credit}}]</option>
+                        {%else:%}
+                            <option value="{{ course_code.replace(' ','_') }}">{{course_code}}:    {{course_name}} [{{credit}}]</option>
+                        {%endif%}
+                    {% endfor%}
+                </select>
+                </div>
+                <div class="icon is-small is-left">
+                    <i class="fas fa-globe"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="title" class="label">Course term</label>
+            <div class="control has-icons-left">
+                <div class="select">
+                <select name="course_term_form">
+                    <option selected >Select term</option>
+                    {% for term in terms%}
+                    <option value={{term}}>{{term}}</option>
+                    {% endfor%}
+                </select>
+                </div>
+                <div class="icon is-small is-left">
+                    <i class="fas fa-globe"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="title" class="label">Instructor Name</label>
+            <div class="control">
+                <input type="text" name="course_insname_form" class="input"/>
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="year" class="label">Grade</label>
+            <div class="control">
+                <input type="text" name="course_grade_form" class="input"/>
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="year" class="label">Estimated Grade</label>
+            <div class="control">
+                <input type="text" name="course_e_grade_form" class="input"/>
+            </div>
+        </div>
+
+
+        <div class="field is-grouped">
+            <div class="control">
+                <button class="button is-primary is-small">Save</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

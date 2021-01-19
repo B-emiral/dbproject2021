@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+
+{% block title %} Editing {%endblock%} 
+
+{% block content %}
+<h1>Editing</h1>
+
+<h2>Course Edit</h2>
+<form action="/editing" method="post" name="edit">
+    <div class="field">
+        <label for="title" class="label">Course</label>
+        <div class="control has-icons-left">
+            <div class="select">
+            <select name="course_code_form">
+                <option selected value="{{past_selection[0][3]}}"> {{past_selection[0][3]}} </option>
+                {% for (course_code,course_name, credit, equ_code) in catalog_courses%}
+                <option value="{{course_code}}">{{course_code}}: {{course_name}}</option>
+                {% endfor%}
+            </select>
+            </div>
+            <div class="icon is-small is-left">
+                <i class="fas fa-globe"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="field">
+        <label for="title" class="label">Course term</label>
+        <div class="control has-icons-left">
+            <div class="select">
+            <select name="course_term_form">
+                <option selected value="{{past_selection[0][2]}}">{{past_selection[0][2]}}</option>
+                {% for term in terms%}
+                <option value={{term}}>{{term}}</option>
+                {% endfor%}
+            </select>
+            </div>
+            <div class="icon is-small is-left">
+                <i class="fas fa-globe"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="field">
+        <label for="title" class="label">Instructor Name</label>
+        <div class="control">
+            <input type="text" name="course_insname_form" class="input" value="{{past_selection[0][5]}}"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <label for="year" class="label">Grade</label>
+        <div class="control">
+            <input type="text" name="course_grade_form" class="input" value="{{past_selection[0][4]}}"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <label for="year" class="label">Estimated Grade</label>
+        <div class="control">
+            <input type="text" name="course_e_grade_form" class="input" value="{{past_selection[0][7]}}"/>
+        </div>
+    </div>
+
+
+    <div class="field has-background-warning-light">
+        <label class="checkbox">
+            <input name="transcript_id_form" type="checkbox" value={{transcript_id}}>
+            Are you sure for this editing? It affects your transcript and GPA!
+        </label>
+    </div>
+    
+    <div class="field has-background-danger-light">
+        <label class="checkbox">
+            <input name="would_be_deleted" type="checkbox" value={{transcript_id}}>
+            If you want to delete this course check it! It will be deleted irreversibly!
+        </label>
+    </div>
+
+    <div class="field is-grouped">
+        <div class="control">
+            <button class="button is-primary is-small">Save</button>
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}

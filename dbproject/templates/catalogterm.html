@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %} CURRICULUM {%endblock%} 
+
+{% block content %}
+<div class="container">
+    <h1>CURRICULUM</h1>
+    <h4>REGISTERED PROGRAM:</h4>
+    <h5>{{user_reg_term.replace("_"," ")}}</h5>
+    <hr>
+    {% for result in results %}
+    <div class="box">
+        <span class="tag is-danger is-medium ml-6">{{result["course_id"]}}</span>
+        {% if result["equ_code"] %}
+        <span class="tag is-info is-light ml-3">{{result["equ_code"]}}</span>
+        {% endif %}
+        <span class="tag is-primary is-light ml-3">{{result["course_name"]}}</span>
+        <span class="tag is-success is-light ml-3">{{result["credit"]}}</span>
+        <span class="tag is-warning is-light ml-3">{{result["grade"]}}</span>
+        <br>
+    </div>
+    {% endfor %}
+    <hr>
+</div>
+{% endblock %}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}  {%endblock%}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='my.css')}}">
+    <script src="static/my.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+</head>
+
+
+<body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="/">
+            <img src="{{url_for('static', filename='navbar_logo.png')}}" width="112" height="28">
+          </a>
+      
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+
+        {%if wasLogged%}
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item" href="{{url_for('home_page')}}">
+                Home
+            </a>
+            <a class="navbar-item" href="{{url_for('transcript_page')}}">
+              Transcript
+            </a>
+            <a class="navbar-item" href="{{url_for('catalogterm_page')}}">
+              Catalog Term
+            </a>
+            <a class="navbar-item" href="{{url_for('mapout_page')}}">
+              Map Out
+            </a>
+          </div>
+      
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                <a class="button is-light" href="{{url_for('logout')}}">
+                  Log out
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {%else%}
+        
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item" href="{{url_for('home_page')}}">
+                Home
+            </a>
+          </div>
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                <a class="button is-primary" href="{{url_for('signup_page')}}">
+                  <strong>Sign up</strong>
+                </a>
+                <a class="button is-light" href="{{url_for('login_page')}}">
+                  Log in
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {%endif%}
+      
+       </nav>
+
+       {% block message%}
+       {% if message %}
+      <div class="notification is-info is-light">
+        <button class="delete"></button>
+          {{message}}
+      </div>
+       {%endif%}
+       {%endblock%}
+    
+
+    
+    <main>
+        <section class="section">
+            <div class="content">
+                {% block content %}{%endblock%}
+            </div>
+        </section>
+    </main>
+
+
+    <footer class="footer">
+        <div class="content">
+            <small>&copy; 2020, Bilgehan Emiral</small>
+        </div>
+    </footer>
+    
+</body>
+</html>

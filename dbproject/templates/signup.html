@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+   <h2>Sign Up</h2>
+    <form action="/signup" method="post" name="signup">
+
+        <div class="field">
+            <label for="title" class="label">Name</label>
+            <p class="control has-icons-left has-icons-right">
+                <input name="stu_name_form" class="input" type="text" placeholder="Name or Nickname">
+                <span class="icon is-small is-left">
+                <i class="far fa-user-circle"></i>
+                </span>
+            </p>
+        </div>
+
+        <div class="field">
+            <label for="title" class="label">Email</label>
+            <p class="control has-icons-left has-icons-right">
+                <input name="email_form" class="input" type="email" placeholder="ITU Email">
+                <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+                </span>
+            </p>
+        </div>
+
+        <div class="field">
+            <label for="title" class="label">Password</label>
+            <p class="control has-icons-left">
+                <input name="password_form" class="input" type="password" placeholder="Password">
+                <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+                </span>
+            </p>
+        </div>
+
+
+        <div class="field">
+            <label for="title" class="label">Catalog Term</label>
+            <div class="control has-icons-left">
+                <div class="select">
+                    <select name="stu_cat_term_form">
+                        <option selected>Select program that you are register now</option>
+                        {% for cat_term in cat_terms%}
+                        <option value={{cat_term}}>{{cat_term.replace("_"," ")}}</option>
+                        {% endfor%}
+                    </select>
+                </div>
+                <div class="icon is-small is-left">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+            </div>
+        </div>
+        <div class="field is-grouped">
+            <div class="control">
+                <button class="button is-primary is-small">Save</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
