@@ -72,11 +72,11 @@ def home_page():
 
 
 
-def transcript_page():
-    if "user_id" in session:
-        return render_template("transcript.html", results=dbOps.getTranscript() )
-    else:
-        return render_template("home.html")
+def transcript_page(course_code):
+    course = dbOps.detailed_course(course_code)
+    return render_template("transcript.html", course=course)
+
+
 
 def catalogterm_page():
     if "user_id" in session:
@@ -170,3 +170,5 @@ def account():
                     return render_template("home.html",  message="Name was successfully changed. Please log in.")
             except:
                 message=""
+
+

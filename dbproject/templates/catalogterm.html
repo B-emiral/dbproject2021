@@ -16,7 +16,7 @@
     <hr>
     {% for result in results %}
     <div class="box">
-        <span class="tag is-info is-medium ml-6">{{result["course_id"]}}</span>
+        <a href="\course\{{result['course_id']}}"><span class="tag is-info is-medium ml-6">{{result["course_id"]}}</span></a>
         {% if result["equ_code"] %}
         <span class="tag is-info is-light ml-3">{{result["equ_code"]}}</span>
         {% endif %}

@@ -397,6 +397,34 @@ def update_name(new_name):
 
 
 
+def detailed_course(course_code):
+    course_code = course_code.replace("_", " ")
+    course_code = course_code.upper()
+
+    result = {}
+    db = MySQLdb.connect(host="localhost", user="root", passwd=MYSQLPASSWORD, db=DATABASE)
+    cursor = db.cursor()
+
+    query = (""" SELECT PREREQUISITE.prereq_id FROM PREREQUISITE WHERE PREREQUISITE.course_id = '{0}'
+            """).format(course_code)
+    cursor.execute(query)
+    result["prereqs"] = list(cursor.fetchall())
+
+
+    query = (""" SELECT COURSE.course_name, COURSE.course_id, COURSE.equ_code, COURSE.credit FROM COURSE WHERE COURSE.course_id = '{0}'
+            """).format(course_code)
+    cursor.execute(query)
+    ret = cursor.fetchall()
+    result["course_name"] = ret[0][0]
+    result["course_id"] = ret[0][1]
+    result["equ_code"] = ret[0][2]
+    result["credit"] = ret[0][3]
+
+
+    return result
+
+
+
     
 
 

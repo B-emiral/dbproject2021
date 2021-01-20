@@ -1,21 +1,15 @@
 {% extends "layout.html" %}
 
-{% block title %} Courses {%endblock%} 
+{% block title %} Course {%endblock%} 
 
 {% block content %}
-<div class="container">
-    <div class="section">
-        <h1>TRANSCRIPT</h1>
-        <h4>REGISTERED PROGRAM:</h4>
-        <h5>{{session["user_term"].replace("_"," ")}}</h5>
+<div class="section">
+    <div class="box has-background-info-light">
+        <h3><span class="tag is-black is-large">Course Code:  </span> <strong>{{course["course_id"]}}</strong> </h3>
+        <h3><span class="tag is-black is-large">Equivalents:  </span> {{course["equ_code"]}} </h3>
+        <h3><span class="tag is-black is-large">Course Name:  </span> {{course["course_name"]}} </h3>
+        <h3><span class="tag is-black is-large">Prerequisites:</span> {{course["prereqs"]}} </h3>
+        <h3><span class="tag is-black is-large">Course Credit:</span> {{course["credit"]}} </h3>
     </div>
-    <hr>
-
-
-    {% for result in results %}
-        <li>{{result}}</li>
-        <br>
-    {% endfor %}
-    <hr>
 </div>
 {% endblock %}

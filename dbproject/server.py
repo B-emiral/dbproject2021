@@ -10,7 +10,7 @@ def create_app():
     app.secret_key = "secret_key"
 
     app.add_url_rule("/", view_func=views.home_page)
-    app.add_url_rule("/transcript", view_func=views.transcript_page)
+    app.add_url_rule("/course/<course_code>", view_func=views.transcript_page)
     app.add_url_rule("/curriculum", view_func=views.catalogterm_page)
     app.add_url_rule("/mapout", view_func=views.mapout_page, methods=["GET", "POST"])
     app.add_url_rule("/logout", view_func=views.logout, methods=["GET"])
