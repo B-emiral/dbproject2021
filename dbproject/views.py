@@ -1,4 +1,5 @@
 from flask import render_template, redirect, request, url_for, session
+
 import dbOps
 from settings import TERM_OPTIONS, REGISTER_OPTIONS, RESPOND_TEXT
 

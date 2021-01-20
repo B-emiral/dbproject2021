@@ -1,8 +1,12 @@
-import MySQLdb
-from settings import MYSQLPASSWORD, DATABASE
-
-
 def database_init():
+    import MySQLdb
+
+    from settings import MYSQLPASSWORD, DATABASE
+
+    import dbpopulate
+    import courseEquivalency
+    import coursePrereq
+
 
     db = MySQLdb.connect(host="localhost", user="root", passwd=MYSQLPASSWORD);
     cursor = db.cursor()
@@ -90,7 +94,11 @@ def database_init():
     #cursor.execute("ALTER TABLE COURSE ADD FOREIGN KEY(course_id) REFERENCES TRANSCRIPT(course_id) ON UPDATE RESTRICT")
 
     cursor.execute("SHOW TABLES")
-
+    db.commit()
     cursor.close()
     db.close()
+
+    dbpopulate.set_catalogs()
+    courseEquivalency.set_equ()
+    coursePrereq.set_prereq()
 

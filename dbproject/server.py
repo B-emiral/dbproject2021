@@ -1,10 +1,15 @@
 from flask import Flask, render_template
 
 import views
+import database
 
 
 def create_app(): 
     app = Flask(__name__)
+
+
+    #If you want the data to be permanent, after running server.py once, please comment the line below. Otherwise, every time server.py is restarted, the database will become initial positon and the users you have created and their data will be lost.
+    database.database_init()
 
     app.config.from_object("settings")
     app.secret_key = "secret_key"

@@ -385,6 +385,15 @@ def delete_user():
     db.commit()
     cursor.close()
     db.close()
+    
+
+def delete_course(course_code):
+    db = MySQLdb.connect(host="localhost", user="root", passwd=MYSQLPASSWORD, db=DATABASE)
+    cursor = db.cursor()
+    cursor.execute("DELETE FROM COURSE WHERE course_code='{0}' ".format(course_code) )
+    db.commit()
+    cursor.close()
+    db.close()
 
 
 def update_name(new_name):
@@ -422,106 +431,4 @@ def detailed_course(course_code):
 
 
     return result
-
-
-
-    
-
-
-
-
-db = MySQLdb.connect(host="localhost", user="root", passwd=MYSQLPASSWORD, db=DATABASE)
-cursor = db.cursor()
-
-
-query =("""     SELECT SUM(DISTINCT unique_credits), SUM(DISTINCT COURSE.credit) AS "unique_credits"
-                FROM TRANSCRIPT INNER JOIN COURSE ON TRANSCRIPT.course_id=COURSE.course_id
-                WHERE (stu_id = '{0}' AND grade!='' AND grade!='XX'AND grade!='FF' AND grade!='VF')
-                GROUP BY COURSE.course_id, TRANSCRIPT.stu_id
-        """    ).format(1)
-
-
-query = ("""    SELECT CATALOG_TERM.course_id, COURSE.course_name, TRANSCRIPT.grade, TRANSCRIPT.stu_id
-                FROM CATALOG_TERM
-                LEFT JOIN COURSE ON COURSE.course_id = CATALOG_TERM.course_id
-                LEFT JOIN TRANSCRIPT ON TRANSCRIPT.course_id = COURSE.course_id
-                
-        """).format(1)
-
-
-
-# completed course and crades
-query =(""" SELECT  TRANSCRIPT.course_id, TRANSCRIPT.transcript_id, COURSE.credit, TRANSCRIPT.grade
-            FROM TRANSCRIPT INNER JOIN COURSE ON TRANSCRIPT.course_id = COURSE.course_id
-            WHERE(
-                (TRANSCRIPT.stu_id, TRANSCRIPT.course_id, TRANSCRIPT.term) 
-                IN(
-                    SELECT TRANSCRIPT.stu_id, TRANSCRIPT.course_id,  MAX(TRANSCRIPT.term) AS "selected_term"
-                    FROM TRANSCRIPT
-                    INNER JOIN COURSE ON TRANSCRIPT.course_id=COURSE.course_id
-                    WHERE stu_id = '{0}'
-                    GROUP BY TRANSCRIPT.course_id
-                )
-                AND TRANSCRIPT.grade!='' AND TRANSCRIPT.grade!='XX' AND TRANSCRIPT.grade!='FF' AND TRANSCRIPT.grade!='VF'
-            )
-        """
-        ).format(1)
-
-
-
-# catalog term course and grades
-query =(""" SELECT CATALOG_TERM.cat_term_id, CATALOG_TERM.course_id, COURSE.course_name, TRANSCRIPT.grade, TRANSCRIPT.stu_id
-            FROM CATALOG_TERM
-            LEFT JOIN COURSE ON CATALOG_TERM.course_id = COURSE.course_id
-            LEFT JOIN TRANSCRIPT ON CATALOG_TERM.course_id = TRANSCRIPT.course_id
-            WHERE( 
-                (
-                    (TRANSCRIPT.stu_id, TRANSCRIPT.course_id, TRANSCRIPT.term)
-                    IN(
-                        SELECT  TRANSCRIPT.stu_id, TRANSCRIPT.course_id, TRANSCRIPT.term
-                        WHERE
-                        (
-                            ( TRANSCRIPT.stu_id, TRANSCRIPT.course_id, TRANSCRIPT.term ) 
-                            IN(
-                                SELECT  TRANSCRIPT.stu_id, TRANSCRIPT.course_id,  MAX(TRANSCRIPT.term) AS "selected_term"
-                                FROM TRANSCRIPT
-                                WHERE TRANSCRIPT.stu_id = {0}
-                                GROUP BY TRANSCRIPT.course_id
-                            ) 
-                        )
-                    )
-                    OR
-                    TRANSCRIPT.stu_id IS NULL
-                )
-                AND CATALOG_TERM.cat_term_id = "{1}" 
-            )
-        """
-        ).format(1,"Computer Engineering (%100 English) Program Curriculum - Student's Catalog Term: Between 2011-2012 Fall Semester and 2017-2018 Fall Semester")
-
-cursor.execute(query)
-for elm in cursor.fetchall():
-    print(elm[1], elm[2], elm[3])
-
-# completed course and crades
-query =(""" SELECT  TRANSCRIPT.stu_id, TRANSCRIPT.transcript_id, TRANSCRIPT.course_id, COURSE.credit, TRANSCRIPT.grade
-            FROM TRANSCRIPT INNER JOIN COURSE ON TRANSCRIPT.course_id = COURSE.course_id
-            WHERE(
-                (TRANSCRIPT.stu_id, TRANSCRIPT.course_id, TRANSCRIPT.term) 
-                IN(
-                    SELECT TRANSCRIPT.stu_id, TRANSCRIPT.course_id,  MAX(TRANSCRIPT.term) AS "selected_term"
-                    FROM TRANSCRIPT
-                    INNER JOIN COURSE ON TRANSCRIPT.course_id=COURSE.course_id
-                    WHERE stu_id = '{0}'
-                    GROUP BY TRANSCRIPT.course_id
-                )
-            )
-        """
-        ).format(1)
-
-cursor.execute(query)
-print(cursor.fetchall())
-
-
-
-
 

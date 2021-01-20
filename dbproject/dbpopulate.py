@@ -1,12 +1,5 @@
-import numpy as np
-import requests
-
-from database import database_init
-
-
-
 def get_catalog(link):
-    
+    import requests
 
     URL = link
     page = requests.get(URL)
@@ -77,16 +70,17 @@ def get_catalog(link):
 
 
 
+def set_catalogs():
+
+    Fall1112_Fall1718= 'http://www.sis.itu.edu.tr/eng/curriculums/plan/BLGE/201210.html'
+    get_catalog(Fall1112_Fall1718)[0]
 
 
-database_init()
-
-Fall1112_Fall1718= 'http://www.sis.itu.edu.tr/eng/curriculums/plan/BLGE/201210.html'
-get_catalog(Fall1112_Fall1718)[0]
+    CE100_2017_2018 = 'http://www.sis.itu.edu.tr/eng/curriculums/plan/BLGE/201810.html'
+    get_catalog(CE100_2017_2018)[0]
 
 
-CE100_2017_2018 = 'http://www.sis.itu.edu.tr/eng/curriculums/plan/BLGE/201810.html'
-get_catalog(CE100_2017_2018)[0]
+    print("already exists")
 
 
 
