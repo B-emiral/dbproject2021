@@ -17,6 +17,7 @@ def create_app():
     app.add_url_rule("/login", view_func=views.login_page, methods=["GET","POST"])
     app.add_url_rule("/signup", view_func=views.signup_page, methods=["GET","POST"])
     app.add_url_rule("/editing", view_func=views.editing_page, methods=["POST"])
+    app.add_url_rule("/account", view_func=views.account, methods=["POST"])
     
     return app
 

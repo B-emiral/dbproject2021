@@ -43,11 +43,13 @@
         <h4>Current GPA: {{ "{:.2f}".format(GPA) }}</h4>
     </div>
     {% endif%}
+
     {% if eGPA%}
     <div class="box has-background-primary-light has-text-centered">
         <h4>Estimated GPA: {{ "{:.2f}".format(eGPA) }}</h4>
     </div>
     {% endif%}
+    
     <hr>
 
     {% if new_course != NULL%}

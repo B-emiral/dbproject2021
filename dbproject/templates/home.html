@@ -9,7 +9,7 @@
         <div class="hero-body">
             <div class="box">
                 <div class="section has-text-centered">
-                        <h1 class="title">Welcome {{user_name}}</h1>
+                        <h1 class="title">Welcome {{session["user_name"]}}</h1>
                         <small class="is-small">Registered Program: {{session["user_term"].replace("_"," ")}}</small>
                 </div>
             </div>
@@ -29,11 +29,48 @@
             <progress class="progress" value={{100*profileInfo.credit_ratio}} max="100"></progress>
             <hr>
         </div>
-
-
-
     </div>
 
+    <div class="box">
+        <div class="section">
+            <form action="/account" method="post" name="edit">
+                <div class="field">
+                    <label for="title" class="label">New Name</label>
+                    <input type = "hidden" name = "name_change" value = "true" />
+                    <div class="control">
+                        <input type="text" name="new_name" class="input"/>
+                    </div>
+                </div>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-info is-normal ml-6">CHANGE MY USER NAME</button>
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="section">
+            <form action="/account" method="post" name="edit">
+                <div class="field">
+                    <label for="title" class="label">Delete My Account!</label>
+                    <div class="control">
+                        <input name="would_be_deleted" type="checkbox" value="true">
+                        If you want to delete your account check it! It will be deleted irreversibly!
+                    </div>
+                </div>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-info is-normal ml-6">DELETE MY ACCOUNT IRREVERSIBLY</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+        
 
     {% else %}
     <section class="hero">

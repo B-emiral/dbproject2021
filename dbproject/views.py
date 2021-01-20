@@ -150,3 +150,23 @@ def mapout_page():
     else:
         return render_template("home.html")
 
+
+def account():
+    if "user_id" in session:
+        message=""
+        if request.method=="POST":
+            try:
+                if str(request.form["would_be_deleted"])=="true":
+                    dbOps.delete_user()
+                    logout()
+                    return render_template("home.html", message="This account doesn't exist anymore")
+            except:
+                message=""
+
+            try:
+                if (str(request.form["name_change"])=="true") and (str(request.form["new_name"])!=""):
+                    dbOps.update_name(str(request.form["new_name"]))
+                    logout()
+                    return render_template("home.html",  message="Name was successfully changed. Please log in.")
+            except:
+                message=""

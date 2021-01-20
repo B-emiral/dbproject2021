@@ -81,6 +81,7 @@ def delete_on_transcript(transcript_id):
     db.close()
     return message
 
+
 def getTranscript(attributeName="*", transcript_id = ""):
     stu_id = session["user_id"]
 
@@ -377,7 +378,26 @@ def summary():
 
     return result_list
 
+def delete_user():
+    db = MySQLdb.connect(host="localhost", user="root", passwd=MYSQLPASSWORD, db=DATABASE)
+    cursor = db.cursor()
+    cursor.execute("DELETE FROM USER WHERE stu_id={0}".format(int(session["user_id"]) ) )
+    db.commit()
+    cursor.close()
+    db.close()
 
+
+def update_name(new_name):
+    db = MySQLdb.connect(host="localhost", user="root", passwd=MYSQLPASSWORD, db=DATABASE)
+    cursor = db.cursor()
+    cursor.execute( "UPDATE USER SET stu_name='{0}' WHERE stu_id={1}".format(new_name, session["user_id"]) )
+    db.commit()
+    cursor.close()
+    db.close()
+
+
+
+    
 
 
 
